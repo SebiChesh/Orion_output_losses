@@ -308,8 +308,7 @@ class TadGAN:
 
         #sets up list for outputting training losses
         if self.verbose:
-            headers = {'cx_loss', 'cz_loss', 'eg_loss'}
-            training_losses = pd.DataFrame(headers)
+            training_losses = pd.DataFrame()
 
         for epoch in range(1, self.epochs + 1):
             if self.shuffle:
@@ -343,7 +342,7 @@ class TadGAN:
                 print('Epoch: {}/{}, Losses: {}'.format(epoch, self.epochs, losses))
                 print("testing print after every epoch")
                 training_losses = training_losses.append(losses, ignore_index=True)
-                print(type(training_losses))
+                print(training_losses)
         if self.verbose:
             training_losses.to_csv('/home/lunet/cosoc/Desktop/orion_anomaly_pipeline/tulog/training_losses/losses.csv', index=False)
             print("i saved to csv")
