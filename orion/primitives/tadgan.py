@@ -342,8 +342,8 @@ class TadGAN:
             if self.verbose:
                 print('Epoch: {}/{}, Losses: {}'.format(epoch, self.epochs, losses))
                 print("testing print after every epoch")
-                print(losses)
                 training_losses = training_losses.append(losses, ignore_index=True)
+                print(training_losses)
         if self.verbose:
             training_losses.to_csv('/home/lunet/cosoc/Desktop/orion_anomaly_pipeline/tulog/training_losses/losses.csv', index=False)
             print("i saved to csv")
