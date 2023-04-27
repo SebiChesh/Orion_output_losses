@@ -305,6 +305,12 @@ class TadGAN:
         real = -tf.ones((self.batch_size, 1), dtype=tf.float64)
 
         indices = np.arange(X_train.shape[0])
+
+        #sets up list for outputting training losses
+        if self.verbose:
+            headers = {'cx_loss', 'cz_loss', 'eg_loss'}
+            training_losses = pd.DataFrame(headers)
+
         for epoch in range(1, self.epochs + 1):
             if self.shuffle:
                 np.random.shuffle(indices)
@@ -335,6 +341,9 @@ class TadGAN:
             losses = self._format_losses([epoch_cx_loss, epoch_cz_loss, epoch_eg_loss])
             if self.verbose:
                 print('Epoch: {}/{}, Losses: {}'.format(epoch, self.epochs, losses))
+                training_losses = training_losses.append(losses, ignore_index=True)
+        if self.verbose:
+            return training_losses
 
     def fit(self, X: ndarray, y: Optional[ndarray] = None, **kwargs) -> None:
         """Fit the TadGAN model.
@@ -357,8 +366,14 @@ class TadGAN:
             self._set_shapes()
             self._build_tadgan(**kwargs)
 
-        self._fit((X, y))
-        self.fitted = True
+        if self.verbose:
+            training_losses_output = self._fit((X,y))
+            self.fitted = True
+            return training_losses_output
+        else:
+            self._fit((X, y))
+            self.fitted = True
+
 
     def predict(self, X: ndarray, y: Optional[ndarray] = None) -> tuple:
         """Predict using TadGAN model.
