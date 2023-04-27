@@ -342,7 +342,7 @@ class TadGAN:
                 print('Epoch: {}/{}, Losses: {}'.format(epoch, self.epochs, losses))
                 training_losses = training_losses.append(losses, ignore_index=True)
         if self.verbose:
-            training_losses.to_csv('/home/lunet/cosoc/Desktop/orion_anomaly_pipeline/tulog/training_losses/losses.csv', index=False)
+            training_losses.to_csv('/home/lunet/cosoc/Desktop/orion_anomaly_pipeline/training_logs/temp/loss.csv', index=False)
 
     def fit(self, X: ndarray, y: Optional[ndarray] = None, **kwargs) -> None:
         """Fit the TadGAN model.
