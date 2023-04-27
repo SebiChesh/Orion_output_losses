@@ -108,11 +108,8 @@ class Orion:
         if not self._fitted:
             self._mlpipeline = self._get_mlpipeline()
 
-        losses = self._mlpipeline.fit(data, **kwargs)
+        self._mlpipeline.fit(data, **kwargs)
         self._fitted = True
-        print("im goign to try to print losses in core")
-        print(losses)
-        return losses
 
     def _get_outputs_spec(self):
         outputs_spec = ["default"]

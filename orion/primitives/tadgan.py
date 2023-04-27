@@ -340,12 +340,9 @@ class TadGAN:
             losses = self._format_losses([epoch_cx_loss, epoch_cz_loss, epoch_eg_loss])
             if self.verbose:
                 print('Epoch: {}/{}, Losses: {}'.format(epoch, self.epochs, losses))
-                print("testing print after every epoch")
                 training_losses = training_losses.append(losses, ignore_index=True)
-                print(training_losses)
         if self.verbose:
             training_losses.to_csv('/home/lunet/cosoc/Desktop/orion_anomaly_pipeline/tulog/training_losses/losses.csv', index=False)
-            print("i saved to csv")
 
     def fit(self, X: ndarray, y: Optional[ndarray] = None, **kwargs) -> None:
         """Fit the TadGAN model.
@@ -368,14 +365,8 @@ class TadGAN:
             self._set_shapes()
             self._build_tadgan(**kwargs)
 
-        if self.verbose:
-            training_losses_output = self._fit((X,y))
-            self.fitted = True
-            return training_losses_output
-        else:
-            self._fit((X, y))
-            self.fitted = True
-
+        self._fit((X,y))
+        self.fitted = True
 
     def predict(self, X: ndarray, y: Optional[ndarray] = None) -> tuple:
         """Predict using TadGAN model.
